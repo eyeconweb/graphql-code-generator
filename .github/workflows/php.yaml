@@ -1,0 +1,37 @@
+name: PHP
+
+on: [push]
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-versions: ['7.2', '7.3', '7.4', '8.0']
+    name: PHP ${{ matrix['php-versions'] }} Test
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix['php-versions'] }}
+        extensions: mbstring
+        ini-values: post_max_size=256M
+        coverage: xdebug
+        tools: php-cs-fixer:2.16.7
+
+    - name: Install Composer dependencies
+      run: |
+        composer update --no-progress --prefer-dist --optimize-autoloader
+
+    - name: Run PHP-CS-Fixer
+      run: php-cs-fixer fix --diff --dry-run --verbose --allow-risky=yes
+      if: ${{ startsWith(matrix['php-versions'], '7.') }}
+
+    - name: Run PHPStan
+      run: vendor/bin/phpstan analyse . --level=max
+
+    - name: Run Tests
+      run: vendor/bin/phpunit --coverage-text

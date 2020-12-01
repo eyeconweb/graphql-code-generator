@@ -1,0 +1,7 @@
+parameters:
+    inferPrivatePropertyTypeFromConstructor: true
+    excludes_analyse:
+        - vendor
+    ignoreErrors:
+        - '#Parameter \#1 \$\w+ of method .+ expects GraphQL\\Language\\AST\\.+, .+>\ given.#'
+        - '#Access to an undefined property GraphQL\\Language\\AST\\TypeNode::\$kind.#'
