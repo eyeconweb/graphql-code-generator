@@ -1,0 +1,47 @@
+type Player implements Character {
+  id: ID!
+  name: String!
+  email: String!
+  age: Int!
+  friends: [Player!]!
+  level: Int!
+  strength: Int!
+  dexterity: Int!
+  intelligence: Int!
+  description: String
+}
+
+type NonPlayerCharacter implements Character {
+  id: ID!
+  level: Int!
+  strength: Int!
+  dexterity: Int!
+  intelligence: Int!
+}
+
+interface Character {
+  level: Int!
+  strength: Int!
+  dexterity: Int!
+  intelligence: Int!
+}
+
+type Potion {
+  id: ID!
+  effect: PotionEffect!
+}
+
+type Weapon {
+  id: ID!
+  name: String!
+  power: Float!
+}
+
+enum PotionEffect {
+  Speed
+  Strength
+  Regeneration
+  Invisibility
+}
+
+union Item = Potion | Weapon

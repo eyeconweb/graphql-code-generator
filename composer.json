@@ -1,0 +1,34 @@
+{
+    "name": "eyecon/graphql-php-code-generator",
+    "description": "Generate models from graphql schema.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Egor Korobov",
+            "email": "ekorobov@eyeconweb.com"
+        }
+    ],
+    "require": {
+        "php": "^7.2 || ^8.0",
+        "psr/container": "^1.0",
+        "nette/php-generator": "^3.5",
+        "myclabs/php-enum": "^1.7",
+        "webonyx/graphql-php": "^14.3"
+    },
+    "require-dev": {
+        "symfony/dependency-injection": "^5.1 || ^4.4",
+        "phpstan/phpstan": "^0.12.56",
+        "phpunit/phpunit": "^9.4 || ^8.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Eyeconweb\\GraphQL\\Generator\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Eyeconweb\\GraphQL\\Generator\\": "tests/"
+        }
+    }
+}
