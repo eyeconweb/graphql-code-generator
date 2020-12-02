@@ -14,34 +14,29 @@ use GraphQL\Language\AST\NodeKind;
 use GraphQL\Language\AST\TypeDefinitionNode;
 use GraphQL\Language\Parser;
 use Nette\PhpGenerator\PhpFile;
-use Psr\Container\ContainerInterface;
 
 class Generator
 {
-    /** @var ContainerInterface */
-    private $container;
+    /** @var BuilderInterface[] */
+    private $builders;
 
     /** @var string */
     private $classNamespace;
 
-    public function __construct(ContainerInterface $container, string $classNamespace)
+    public function __construct(string $classNamespace, ?EnumBuilderInterface $enumBuilder, ?InterfaceBuilderInterface $interfaceBuilder, ?ObjectBuilderInterface $objectBuilder, ?UnionBuilderInterface $unionBuilder)
     {
-        $this->container = $container;
         $this->classNamespace = $classNamespace;
-    }
 
-    /**
-     * @return string[]
-     * @phpstan-return array<string,class-string<BuilderInterface>>
-     */
-    public static function getSubscribedServices(): array
-    {
-        return [
-            NodeKind::ENUM_TYPE_DEFINITION => EnumBuilderInterface::class,
-            NodeKind::INTERFACE_TYPE_DEFINITION => InterfaceBuilderInterface::class,
-            NodeKind::OBJECT_TYPE_DEFINITION => ObjectBuilderInterface::class,
-            NodeKind::UNION_TYPE_DEFINITION => UnionBuilderInterface::class,
+        $builders = [
+            NodeKind::ENUM_TYPE_DEFINITION => $enumBuilder,
+            NodeKind::INTERFACE_TYPE_DEFINITION => $interfaceBuilder,
+            NodeKind::OBJECT_TYPE_DEFINITION => $objectBuilder,
+            NodeKind::UNION_TYPE_DEFINITION => $unionBuilder,
         ];
+
+        $this->builders = array_filter($builders, function ($value) {
+            return $value !== null;
+        });
     }
 
     /**
@@ -57,11 +52,9 @@ class Generator
 
         /** @var Node $definition */
         foreach ($documentNode->definitions as $definition) {
-            $builderInterface = self::getSubscribedServices()[$definition->kind] ?? null;
-            if ($builderInterface !== null && $definition instanceof TypeDefinitionNode && $this->container->has($builderInterface)) {
+            if ($definition instanceof TypeDefinitionNode && isset($this->builders[$definition->kind])) {
                 /** @var BuilderInterface $builder */
-                $builder = $this->container->get($builderInterface);
-
+                $builder = $this->builders[$definition->kind];
                 $phpFile = $builder->build($documentNode, $definition, $this->classNamespace);
 
                 $className = $definition->name->value;
