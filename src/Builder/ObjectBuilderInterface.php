@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Eyeconweb\GraphQL\Generator\Builder;
 
 use GraphQL\Language\AST\DocumentNode;
-use GraphQL\Language\AST\TypeDefinitionNode;
+use GraphQL\Language\AST\ObjectTypeDefinitionNode;
 use Nette\PhpGenerator\PhpFile;
 
-interface BuilderInterface
+interface ObjectBuilderInterface extends BuilderInterface
 {
     /**
-     * @param DocumentNode       $documentNode
-     * @param TypeDefinitionNode $definition
-     * @param string             $classNamespace
+     * @param DocumentNode             $documentNode
+     * @param ObjectTypeDefinitionNode $definition
+     * @param string                   $classNamespace
      *
      * @return PhpFile
      */

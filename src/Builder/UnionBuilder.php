@@ -4,29 +4,15 @@ declare(strict_types=1);
 
 namespace Eyeconweb\GraphQL\Generator\Builder;
 
-use Eyeconweb\GraphQL\Generator\Exception\UnexpectedDefinitionTypeException;
-use GraphQL\Language\AST\DocumentNode;
 use GraphQL\Language\AST\NamedTypeNode;
-use GraphQL\Language\AST\NodeKind;
 use GraphQL\Language\AST\NodeList;
-use GraphQL\Language\AST\TypeDefinitionNode;
-use GraphQL\Language\AST\UnionTypeDefinitionNode;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpFile;
 
-class UnionBuilder implements BuilderInterface
+class UnionBuilder implements UnionBuilderInterface
 {
-    public static function getTypeDefinition(): string
+    public function build($documentNode, $definition, $classNamespace): PhpFile
     {
-        return NodeKind::UNION_TYPE_DEFINITION;
-    }
-
-    public function build(DocumentNode $documentNode, TypeDefinitionNode $definition, string $classNamespace): PhpFile
-    {
-        if (!$definition instanceof UnionTypeDefinitionNode) {
-            throw new UnexpectedDefinitionTypeException(UnionTypeDefinitionNode::class, $definition);
-        }
-
         $file = new PhpFile();
         $file->setStrictTypes();
 

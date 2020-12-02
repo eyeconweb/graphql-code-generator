@@ -4,30 +4,16 @@ declare(strict_types=1);
 
 namespace Eyeconweb\GraphQL\Generator\Builder;
 
-use Eyeconweb\GraphQL\Generator\Exception\UnexpectedDefinitionTypeException;
-use GraphQL\Language\AST\DocumentNode;
-use GraphQL\Language\AST\EnumTypeDefinitionNode;
 use GraphQL\Language\AST\EnumValueDefinitionNode;
-use GraphQL\Language\AST\NodeKind;
 use GraphQL\Language\AST\NodeList;
-use GraphQL\Language\AST\TypeDefinitionNode;
 use MyCLabs\Enum\Enum;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpFile;
 
-class EnumBuilder implements BuilderInterface
+class EnumBuilder implements EnumBuilderInterface
 {
-    public static function getTypeDefinition(): string
+    public function build($documentNode, $definition, $classNamespace): PhpFile
     {
-        return NodeKind::ENUM_TYPE_DEFINITION;
-    }
-
-    public function build(DocumentNode $documentNode, TypeDefinitionNode $definition, string $classNamespace): PhpFile
-    {
-        if (!$definition instanceof EnumTypeDefinitionNode) {
-            throw new UnexpectedDefinitionTypeException(EnumTypeDefinitionNode::class, $definition);
-        }
-
         $file = new PhpFile();
         $file->setStrictTypes();
 

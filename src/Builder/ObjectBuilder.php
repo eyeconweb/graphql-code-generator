@@ -6,17 +6,12 @@ namespace Eyeconweb\GraphQL\Generator\Builder;
 
 use Eyeconweb\GraphQL\Generator\ASTHelper;
 use Eyeconweb\GraphQL\Generator\DefaultTypes;
-use Eyeconweb\GraphQL\Generator\Exception\UnexpectedDefinitionTypeException;
-use GraphQL\Language\AST\DocumentNode;
 use GraphQL\Language\AST\FieldDefinitionNode;
-use GraphQL\Language\AST\NodeKind;
 use GraphQL\Language\AST\NodeList;
-use GraphQL\Language\AST\ObjectTypeDefinitionNode;
-use GraphQL\Language\AST\TypeDefinitionNode;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpFile;
 
-class ObjectBuilder implements BuilderInterface
+class ObjectBuilder implements ObjectBuilderInterface
 {
     /** @var DefaultTypes */
     private $defaultTypes;
@@ -26,17 +21,8 @@ class ObjectBuilder implements BuilderInterface
         $this->defaultTypes = $defaultTypes;
     }
 
-    public static function getTypeDefinition(): string
+    public function build($documentNode, $definition, $classNamespace): PhpFile
     {
-        return NodeKind::OBJECT_TYPE_DEFINITION;
-    }
-
-    public function build(DocumentNode $documentNode, TypeDefinitionNode $definition, string $classNamespace): PhpFile
-    {
-        if (!$definition instanceof ObjectTypeDefinitionNode) {
-            throw new UnexpectedDefinitionTypeException(ObjectTypeDefinitionNode::class, $definition);
-        }
-
         $file = new PhpFile();
         $file->setStrictTypes();
 
