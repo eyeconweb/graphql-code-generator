@@ -1,5 +1,5 @@
 {
-    "name": "eyecon/graphql-php-code-generator",
+    "name": "eyecon/graphql-code-generator",
     "description": "Generate models from graphql schema.",
     "type": "library",
     "license": "MIT",
