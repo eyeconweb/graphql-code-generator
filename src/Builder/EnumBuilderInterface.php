@@ -8,14 +8,7 @@ use GraphQL\Language\AST\DocumentNode;
 use GraphQL\Language\AST\EnumTypeDefinitionNode;
 use Nette\PhpGenerator\PhpFile;
 
-interface EnumBuilderInterface extends BuilderInterface
+interface EnumBuilderInterface
 {
-    /**
-     * @param DocumentNode           $documentNode
-     * @param EnumTypeDefinitionNode $definition
-     * @param string                 $classNamespace
-     *
-     * @return PhpFile
-     */
-    public function build($documentNode, $definition, $classNamespace);
+    public function build(DocumentNode $documentNode, EnumTypeDefinitionNode $definition, string $classNamespace): PhpFile;
 }

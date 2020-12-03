@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Eyeconweb\GraphQL\Generator\Builder;
 
+use GraphQL\Language\AST\DocumentNode;
+use GraphQL\Language\AST\EnumTypeDefinitionNode;
 use GraphQL\Language\AST\EnumValueDefinitionNode;
 use GraphQL\Language\AST\NodeList;
 use MyCLabs\Enum\Enum;
@@ -12,7 +14,7 @@ use Nette\PhpGenerator\PhpFile;
 
 class EnumBuilder implements EnumBuilderInterface
 {
-    public function build($documentNode, $definition, $classNamespace): PhpFile
+    public function build(DocumentNode $documentNode, EnumTypeDefinitionNode $definition, string $classNamespace): PhpFile
     {
         $file = new PhpFile();
         $file->setStrictTypes();

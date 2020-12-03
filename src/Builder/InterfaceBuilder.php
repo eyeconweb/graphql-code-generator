@@ -6,7 +6,9 @@ namespace Eyeconweb\GraphQL\Generator\Builder;
 
 use Eyeconweb\GraphQL\Generator\ASTHelper;
 use Eyeconweb\GraphQL\Generator\DefaultTypes;
+use GraphQL\Language\AST\DocumentNode;
 use GraphQL\Language\AST\FieldDefinitionNode;
+use GraphQL\Language\AST\InterfaceTypeDefinitionNode;
 use GraphQL\Language\AST\NodeList;
 use GraphQL\Language\AST\ObjectTypeDefinitionNode;
 use Nette\PhpGenerator\ClassType;
@@ -22,7 +24,7 @@ class InterfaceBuilder implements InterfaceBuilderInterface
         $this->defaultTypes = $defaultTypes;
     }
 
-    public function build($documentNode, $definition, $classNamespace): PhpFile
+    public function build(DocumentNode $documentNode, InterfaceTypeDefinitionNode $definition, string $classNamespace): PhpFile
     {
         $file = new PhpFile();
         $file->setStrictTypes();

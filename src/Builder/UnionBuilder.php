@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace Eyeconweb\GraphQL\Generator\Builder;
 
+use GraphQL\Language\AST\DocumentNode;
 use GraphQL\Language\AST\NamedTypeNode;
 use GraphQL\Language\AST\NodeList;
+use GraphQL\Language\AST\UnionTypeDefinitionNode;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpFile;
 
 class UnionBuilder implements UnionBuilderInterface
 {
-    public function build($documentNode, $definition, $classNamespace): PhpFile
+    public function build(DocumentNode $documentNode, UnionTypeDefinitionNode $definition, string $classNamespace): PhpFile
     {
         $file = new PhpFile();
         $file->setStrictTypes();

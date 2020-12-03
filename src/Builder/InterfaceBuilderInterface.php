@@ -8,14 +8,7 @@ use GraphQL\Language\AST\DocumentNode;
 use GraphQL\Language\AST\InterfaceTypeDefinitionNode;
 use Nette\PhpGenerator\PhpFile;
 
-interface InterfaceBuilderInterface extends BuilderInterface
+interface InterfaceBuilderInterface
 {
-    /**
-     * @param DocumentNode                $documentNode
-     * @param InterfaceTypeDefinitionNode $definition
-     * @param string                      $classNamespace
-     *
-     * @return PhpFile
-     */
-    public function build($documentNode, $definition, $classNamespace);
+    public function build(DocumentNode $documentNode, InterfaceTypeDefinitionNode $definition, string $classNamespace): PhpFile;
 }

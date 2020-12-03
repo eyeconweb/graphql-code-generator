@@ -8,14 +8,7 @@ use GraphQL\Language\AST\DocumentNode;
 use GraphQL\Language\AST\UnionTypeDefinitionNode;
 use Nette\PhpGenerator\PhpFile;
 
-interface UnionBuilderInterface extends BuilderInterface
+interface UnionBuilderInterface
 {
-    /**
-     * @param DocumentNode            $documentNode
-     * @param UnionTypeDefinitionNode $definition
-     * @param string                  $classNamespace
-     *
-     * @return PhpFile
-     */
-    public function build($documentNode, $definition, $classNamespace);
+    public function build(DocumentNode $documentNode, UnionTypeDefinitionNode $definition, string $classNamespace): PhpFile;
 }
