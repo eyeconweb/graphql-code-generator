@@ -24,7 +24,9 @@ class GeneratorTest extends TestCase
             new EnumBuilder(),
             new InterfaceBuilder(new DefaultTypes()),
             new ObjectBuilder(new DefaultTypes()),
-            new UnionBuilder()
+            new UnionBuilder(),
+            null,
+            null
         );
         $files = $generator->generateFromSchema($schema);
 

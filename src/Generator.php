@@ -5,13 +5,17 @@ declare(strict_types=1);
 namespace Eyeconweb\GraphQL\Generator;
 
 use Eyeconweb\GraphQL\Generator\Builder\EnumBuilderInterface;
+use Eyeconweb\GraphQL\Generator\Builder\InputObjectBuilderInterface;
 use Eyeconweb\GraphQL\Generator\Builder\InterfaceBuilderInterface;
 use Eyeconweb\GraphQL\Generator\Builder\ObjectBuilderInterface;
+use Eyeconweb\GraphQL\Generator\Builder\ScalarBuilderInterface;
 use Eyeconweb\GraphQL\Generator\Builder\UnionBuilderInterface;
 use GraphQL\Language\AST\EnumTypeDefinitionNode;
+use GraphQL\Language\AST\InputObjectTypeDefinitionNode;
 use GraphQL\Language\AST\InterfaceTypeDefinitionNode;
 use GraphQL\Language\AST\Node;
 use GraphQL\Language\AST\ObjectTypeDefinitionNode;
+use GraphQL\Language\AST\ScalarTypeDefinitionNode;
 use GraphQL\Language\AST\TypeDefinitionNode;
 use GraphQL\Language\AST\UnionTypeDefinitionNode;
 use GraphQL\Language\Parser;
@@ -25,7 +29,7 @@ class Generator
     /** @var string */
     private $classNamespace;
 
-    public function __construct(string $classNamespace, ?EnumBuilderInterface $enumBuilder, ?InterfaceBuilderInterface $interfaceBuilder, ?ObjectBuilderInterface $objectBuilder, ?UnionBuilderInterface $unionBuilder)
+    public function __construct(string $classNamespace, ?EnumBuilderInterface $enumBuilder, ?InterfaceBuilderInterface $interfaceBuilder, ?ObjectBuilderInterface $objectBuilder, ?UnionBuilderInterface $unionBuilder, ?ScalarBuilderInterface $scalarBuilder, ?InputObjectBuilderInterface $inputObjectBuilder)
     {
         $this->classNamespace = $classNamespace;
 
@@ -34,6 +38,8 @@ class Generator
             InterfaceTypeDefinitionNode::class => $interfaceBuilder,
             ObjectTypeDefinitionNode::class => $objectBuilder,
             UnionTypeDefinitionNode::class => $unionBuilder,
+            ScalarTypeDefinitionNode::class => $scalarBuilder,
+            InputObjectTypeDefinitionNode::class => $inputObjectBuilder,
         ];
 
         $this->builders = array_filter($builders, function ($value) {
